@@ -23,6 +23,6 @@
 2. Java
 3. Python
 
-![Tux, the Linux mascot](https://user-images.githubusercontent.com/99980163/181725852-ebb7ae1f-de55-487a-bbd5-94fb2c7168a8.png)
+![Tux, the Linux mascot](https://www.facebook.com/photo/?fbid=830477611096848&set=a.114220426055907)
 
 
