@@ -27,3 +27,4 @@
 
 <https://github.com/Sameeh-Hamdan>
 
+<java.sameeh.hamdan@gmail.com>
