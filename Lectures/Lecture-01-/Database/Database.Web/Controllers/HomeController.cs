@@ -31,6 +31,10 @@ namespace Database.Web.Controllers
         {
             return Ok("Hello..");
         }
+        public IActionResult Welcome(string name,int age)
+        {
+            return Ok($"Welcome {name}, Your age is {age}");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
