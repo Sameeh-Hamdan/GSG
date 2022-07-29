@@ -14,8 +14,8 @@
 >>Samer Manaa
 
 **Hello**,  *Everybody*..<br>
- - I'm [***Sameeh***](https://www.facebook.com/profile.php?id=100024038503828)..
- - Back-End Developer
+ - I'm ***[Sameeh](https://www.facebook.com/profile.php?id=100024038503828)***..
+ - `Back-End` Developer
 
 #### Skills:
 
@@ -28,3 +28,4 @@
 <https://github.com/Sameeh-Hamdan>
 
 <java.sameeh.hamdan@gmail.com>
+
