@@ -7,7 +7,7 @@
 ### Projects
 ### Practice
 
->Where the **wolves** go, **ravens** Follow**
+>Where the **wolves** go, **ravens** Follow.
 
 **Hello**,  *Everybody*..<br>
  - I'm ***Sameeh***..
