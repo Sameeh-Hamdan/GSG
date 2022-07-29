@@ -15,10 +15,12 @@
  - I'm ***Sameeh***..
  - Back-End Developer
 
-1. Open the file containing the Linux mascot.
-2. Marvel at its beauty.
+#### Skills:
 
-    ![Tux, the Linux mascot](https://user-images.githubusercontent.com/99980163/181725852-ebb7ae1f-de55-487a-bbd5-94fb2c7168a8.png)
+1. C#
+2. Java
+3. Python
 
-3. Close the file.
+![Tux, the Linux mascot](https://user-images.githubusercontent.com/99980163/181725852-ebb7ae1f-de55-487a-bbd5-94fb2c7168a8.png)
+
 
