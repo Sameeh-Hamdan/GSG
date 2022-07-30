@@ -35,7 +35,8 @@ namespace Product.API.Controllers
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            return Ok($"return Products");
+            _productService.Delete(id);
+            return Ok($"Deleted..");
         }
     }
 }

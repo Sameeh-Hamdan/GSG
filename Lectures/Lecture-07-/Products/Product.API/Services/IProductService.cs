@@ -7,5 +7,6 @@ namespace Product.API.Services
     {
         ProductEntity Get(int id);
         List<ProductEntity> GetAll();
+        void Delete(int id);
     }
 }

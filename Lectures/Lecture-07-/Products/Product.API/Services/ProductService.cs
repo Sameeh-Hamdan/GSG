@@ -23,5 +23,12 @@ namespace Product.API.Services
             return _context.Products.Find(id);
         }
 
+        public void Delete(int id)
+        {
+            var product= _context.Products.Find(id);
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+        }
+
     }
 }
