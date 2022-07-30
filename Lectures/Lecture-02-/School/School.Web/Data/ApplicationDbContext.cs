@@ -19,5 +19,7 @@ namespace School.Web.Data
         public DbSet<Admin> Admins { get; set; }
 
         public DbSet<Car> Cars { get; set; }
+
+        public DbSet<Mark> Marks { get; set; }
     }
 }
