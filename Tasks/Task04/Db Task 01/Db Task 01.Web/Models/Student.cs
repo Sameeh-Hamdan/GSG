@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Db_Task_01.Web.Models
 {
-    public class Student:BaseEntity
+    public class Student
     {
         public int Id { get; set; }
         [Required]
