@@ -1,5 +1,6 @@
 ﻿using Db_Task_01.Web.Data;
 using Db_Task_01.Web.DTOs.StudentDTOs;
+using Db_Task_01.Web.Exceptions.Student;
 using Db_Task_01.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -31,6 +32,11 @@ namespace Db_Task_01.Web.Services
         }
         public int Create(CreateStudentDTO dto)
         {
+            var IsDuplicated = _context.Students.Any(std=> std.Name == dto.Name);
+            if (IsDuplicated)
+            {
+                throw new DuplicatedNames();
+            }
             var student = new Student()
             {
                 Name = dto.Name,
