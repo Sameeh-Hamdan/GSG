@@ -1,4 +1,5 @@
 using Db_Task_01.Web.Data;
+using Db_Task_01.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,7 @@ namespace Db_Task_01.Web
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IStudentService,StudentService>();
             services.AddControllersWithViews();
         }
 
