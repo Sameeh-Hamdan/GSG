@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Task01.Web.Models;
+using Task02.Web.Models;
 
-namespace Task01.Web.Controllers
+namespace Task02.Web.Controllers
 {
     public class ProductController : Controller
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Task01.Web.Models
+namespace Task02.Web.Models
 {
     public class ErrorViewModel
     {

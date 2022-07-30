@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Task01.Web.Models
+namespace Task02.Web.Models
 {
     public class Product
     {
