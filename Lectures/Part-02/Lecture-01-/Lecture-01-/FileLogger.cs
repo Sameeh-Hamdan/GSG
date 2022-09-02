@@ -10,7 +10,7 @@ namespace Lecture_01_
     {
         public void PrintToFile(string msg)
         {
-            Console.WriteLine(msg);
+            System.IO.File.WriteAllText("",msg);
         }
     }
 }
