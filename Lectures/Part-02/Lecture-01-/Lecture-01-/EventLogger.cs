@@ -8,10 +8,15 @@ namespace Lecture_01_
 {
     public class EventLogger
     {
-        private ConsoleLogger _logger = new ConsoleLogger();
+        private ILogger _logger { get; set; }
+        public EventLogger(ILogger logger)
+        {
+            _logger = logger;
+        }
+    
         public void Print(string msg)
         {
-            _logger.PrintToConsole(msg);
+            _logger.Print(msg);
         }
     }
 }

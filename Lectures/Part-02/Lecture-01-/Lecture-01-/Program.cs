@@ -6,7 +6,13 @@ namespace Lecture_01_
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //ILogger logger = new ConsoleLogger();
+            ILogger logger = new FileLogger();
+            var eventLogger=new EventLogger(logger);
+            eventLogger.Print("Sameeh Abutaima");
+            Console.ReadKey();
+
+
         }
     }
 }

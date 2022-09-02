@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Lecture_01_
 {
-    public class FileLogger
+    public class FileLogger:ILogger
     {
-        public void PrintToFile(string msg)
+        public void Print(string msg)
         {
-            System.IO.File.WriteAllText("",msg);
+            System.IO.File.WriteAllText("D:\\file.txt", msg);
         }
     }
 }

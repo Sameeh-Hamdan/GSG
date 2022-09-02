@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lecture_01_
 {
-    public class ConsoleLogger:ILogger
+    public interface ILogger
     {
-        public void Print(string msg)
-        {
-            Console.WriteLine(msg);
-        }
+        void Print(string msg);
     }
 }
