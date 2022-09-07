@@ -1,6 +1,6 @@
 using System;
 
-namespace Exam
+namespace Exam1
 {
     public class WeatherForecast
     {

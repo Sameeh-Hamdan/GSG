@@ -1,9 +1,7 @@
-using Exam.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Exam
+namespace Exam1
 {
     public class Startup
     {
@@ -30,10 +28,9 @@ namespace Exam
         {
 
             services.AddControllers();
-            services.AddDbContext<Exam_DBContext>(options=>options.UseSqlServer("Server=SAMEEH-ABUTAIMA;Database=Exam_DB;Trusted_Connection=True;"));
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exam", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exam1", Version = "v1" });
             });
         }
 
@@ -44,7 +41,7 @@ namespace Exam
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Exam v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Exam1 v1"));
             }
 
             app.UseHttpsRedirection();
