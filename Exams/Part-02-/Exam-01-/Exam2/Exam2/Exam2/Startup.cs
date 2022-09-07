@@ -1,3 +1,6 @@
+using AutoMapper;
+using Exam2.Mapper;
+using Exam2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,13 +15,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Exam1
+namespace Exam2
 {
     public class Startup
     {
+        private MapperConfiguration _mapperConfiguration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Mapping());
+            });
+
         }
 
         public IConfiguration Configuration { get; }
@@ -28,10 +38,12 @@ namespace Exam1
         {
 
             services.AddControllers();
+            services.AddDbContext<Exam_DBContext>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exam1", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exam2", Version = "v1" });
             });
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +53,7 @@ namespace Exam1
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Exam1 v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Exam2 v1"));
             }
 
             app.UseHttpsRedirection();
