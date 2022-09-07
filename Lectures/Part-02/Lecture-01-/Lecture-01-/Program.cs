@@ -11,8 +11,6 @@ namespace Lecture_01_
             var eventLogger=new EventLogger(logger);
             eventLogger.Print("Sameeh Abutaima");
             Console.ReadKey();
-
-
         }
     }
 }
