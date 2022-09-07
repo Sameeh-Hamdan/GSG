@@ -1,3 +1,5 @@
+using AutoMapper;
+using HowToAutoMapper.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,9 +18,14 @@ namespace HowToAutoMapper
 {
     public class Startup
     {
+        private MapperConfiguration _mapperConfiguration;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Mapping());
+            });
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +39,7 @@ namespace HowToAutoMapper
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HowToAutoMapper", Version = "v1" });
             });
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
