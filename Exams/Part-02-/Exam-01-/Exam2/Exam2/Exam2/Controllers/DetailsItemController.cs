@@ -38,30 +38,30 @@ namespace Exam2.Controllers
         .ToArray();
 
 
-        //[HttpGet]
-        //public IEnumerable<DetailsItem> CSV()
-        //{
-        //    var res = _dbContext.Items.Select(item => new DetailsItem
-        //    {
-        //        Id = item.Id,
-        //        Name = item.Name,
-        //        SubCategoryName = item.Sub.Name,
-        //        CategoryName = item.Sub.Cat.Name
-        //    })
-        //.ToArray();
+        [HttpGet]
+        public IEnumerable<DetailsItem> CSV()
+        {
+            var res = _dbContext.Items.Select(item => new DetailsItem
+            {
+                Id = item.Id,
+                Name = item.Name,
+                SubCategoryName = item.Sub.Name,
+                CategoryName = item.Sub.Cat.Name
+            })
+            .ToArray();
 
-        //    var csvPath = Path.Combine(Environment.CurrentDirectory, $"Items-{DateTime.Now.ToFileTime()}.csv");
-        //    using (var streamWriter = new StreamWriter(csvPath))
-        //    {
-        //        using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
-        //        {
-        //            csvWriter.Context.AutoMap<DetailsItem>();
-        //            csvWriter.WriteRecords(res);
-        //        }
-        //    }
+            var csvPath = Path.Combine(Environment.CurrentDirectory, $"Items-{DateTime.Now.ToFileTime()}.csv");
+            using (var streamWriter = new StreamWriter(csvPath))
+            {
+                using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+                {
+                    csvWriter.Context.AutoMap<DetailsItem>();
+                    csvWriter.WriteRecords(res);
+                }
+            }
 
-        //    return res;
-        //}
+            return res;
+        }
 
         // GET api/<DetailsItemController>/5
         [HttpGet("{id}")]
