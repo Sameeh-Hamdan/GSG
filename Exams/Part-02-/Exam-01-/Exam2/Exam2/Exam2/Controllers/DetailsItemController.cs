@@ -26,41 +26,46 @@ namespace Exam2.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/<DetailsItemController>
+        //GET: api/<DetailsItemController>
         [HttpGet]
-        public IEnumerable<DetailsItem> Get() => _dbContext.Items.Select(item => new DetailsItem
+        public IEnumerable<DetailsItem> Get()
         {
-            Id = item.Id,
-            Name = item.Name,
-            SubCategoryName = item.Sub.Name,
-            CategoryName = item.Sub.Cat.Name
-        })
-        .ToArray();
-
-
-        [HttpGet]
-        public IEnumerable<DetailsItem> CSV()
-        {
-            var res = _dbContext.Items.Select(item => new DetailsItem
+            //var items = _dbContext.Items.ToArray();
+            var detailsItems = _dbContext.Items.Select(item => new DetailsItem
             {
-                Id = item.Id,
-                Name = item.Name,
+                ItemId = item.Id,
+                ItemName = item.Name,
                 SubCategoryName = item.Sub.Name,
                 CategoryName = item.Sub.Cat.Name
             })
             .ToArray();
+            //var detailsItems = _mapper.Map<IEnumerable<DetailsItem>>(items);
 
+            return detailsItems;
+        }
+
+        [HttpGet]
+        public IEnumerable<DetailsItem> CSVPrint()
+        {
+            var detailsItems = _dbContext.Items.Select(item => new DetailsItem
+            {
+                ItemId = item.Id,
+                ItemName = item.Name,
+                SubCategoryName = item.Sub.Name,
+                CategoryName = item.Sub.Cat.Name
+            })
+            .ToArray();
+            var listOfItem = detailsItems.ToList();
             var csvPath = Path.Combine(Environment.CurrentDirectory, $"Items-{DateTime.Now.ToFileTime()}.csv");
             using (var streamWriter = new StreamWriter(csvPath))
             {
                 using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
                 {
-                    csvWriter.Context.AutoMap<DetailsItem>();
-                    csvWriter.WriteRecords(res);
+                    csvWriter.WriteRecords(listOfItem);
                 }
             }
 
-            return res;
+            return detailsItems;
         }
 
         // GET api/<DetailsItemController>/5

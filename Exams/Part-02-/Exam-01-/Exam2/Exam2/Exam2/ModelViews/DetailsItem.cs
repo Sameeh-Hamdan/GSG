@@ -2,8 +2,8 @@
 {
     public class DetailsItem
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
         public string SubCategoryName { get; set; }
         public string CategoryName { get; set; }
     }
