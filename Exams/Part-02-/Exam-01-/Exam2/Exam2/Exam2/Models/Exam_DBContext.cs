@@ -8,6 +8,7 @@ namespace Exam2.Models
 {
     public partial class Exam_DBContext : DbContext
     {
+        //public bool IgnoreFilter { get; set; }
         public Exam_DBContext()
         {
         }
@@ -70,7 +71,7 @@ namespace Exam2.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Sub_Categ__CatId__267ABA7A");
             });
-
+            //modelBuilder.Entity<User>().HasQueryFilter(usr => usr.Archived == 0 || IgnoreFilter);
             OnModelCreatingPartial(modelBuilder);
         }
 

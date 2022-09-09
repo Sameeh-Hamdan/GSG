@@ -44,8 +44,8 @@ namespace Exam2.Controllers
             return detailsItems;
         }
 
-        [HttpGet("{id}")]
-        public IEnumerable<DetailsItem> CSVPrint()
+        [HttpGet("[action]")]
+        public IActionResult CSVPrint()
         {
             var detailsItems = _dbContext.Items.Select(item => new DetailsItem
             {
@@ -65,15 +65,15 @@ namespace Exam2.Controllers
                 }
             }
 
-            return listOfItem;
+            return Ok();
         }
 
-        // GET api/<DetailsItemController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        //GET api/<DetailsItemController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
 
         // POST api/<DetailsItemController>
         [HttpPost]
