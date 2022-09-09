@@ -44,7 +44,7 @@ namespace Exam2.Controllers
             return detailsItems;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IEnumerable<DetailsItem> CSVPrint()
         {
             var detailsItems = _dbContext.Items.Select(item => new DetailsItem
@@ -54,26 +54,26 @@ namespace Exam2.Controllers
                 SubCategoryName = item.Sub.Name,
                 CategoryName = item.Sub.Cat.Name
             })
-            .ToArray();
-            var listOfItem = detailsItems.ToList();
+            ;
+            var listOfItem = detailsItems.ToArray();
             var csvPath = Path.Combine(Environment.CurrentDirectory, $"Items-{DateTime.Now.ToFileTime()}.csv");
             using (var streamWriter = new StreamWriter(csvPath))
             {
                 using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
                 {
-                    csvWriter.WriteRecords(listOfItem);
+                    csvWriter.WriteRecords(detailsItems);
                 }
             }
 
-            return detailsItems;
+            return listOfItem;
         }
 
         // GET api/<DetailsItemController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/<DetailsItemController>
         [HttpPost]

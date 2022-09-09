@@ -23,11 +23,14 @@ namespace Exam2
 
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new Mapping());
             });
+
+            
 
         }
 
@@ -53,7 +56,7 @@ namespace Exam2
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Exam2 v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
             app.UseHttpsRedirection();
