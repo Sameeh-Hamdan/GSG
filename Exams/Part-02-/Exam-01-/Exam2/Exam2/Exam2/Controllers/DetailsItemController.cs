@@ -5,6 +5,8 @@ using Exam2.Models;
 using Exam2.ModelViews;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -42,7 +44,7 @@ namespace Exam2.Controllers
         {
             var detailsOfItems = _dbContext.DetailsOfItems.ToList();
             var detailsItemsDTO = _mapper.Map<List<DetailsItemDTO>>(detailsOfItems);
-            
+
             var csvPath = Path.Combine(Environment.CurrentDirectory, $"Items-{DateTime.Now.ToFileTime()}.csv");
             using (var streamWriter = new StreamWriter(csvPath))
             {
@@ -55,11 +57,28 @@ namespace Exam2.Controllers
             return Ok();
         }
 
+        [HttpGet("[action]")]
+        public IActionResult GetRest()
+        {
+            var baseUrl = "https://mocki.io/v1/";
+            var client = new RestClient(baseUrl);
+            var request = new RestRequest("d4867d8b-b5d5-4a48-a4ab-79131b5809b8");
+            var res = client.Execute(request);
+            //
+            if (res.IsSuccessful)
+            {
+                var con = res.Content;
+                var deserializedFile = JsonConvert.DeserializeObject<List<RestResult>>(con);
+                return Ok(deserializedFile);
+            }
+
+            return BadRequest("Bad Request");
+        }
         //GET api/<DetailsItemController>/5
         [HttpGet("{id}")]
         public DetailsItemDTO Get(int id)
         {
-            var detailsOfItem = _dbContext.DetailsOfItems.Where(x=>x.ItemId==id).First();
+            var detailsOfItem = _dbContext.DetailsOfItems.Where(x => x.ItemId == id).First();
             var detailsItemsDTO = _mapper.Map<DetailsItemDTO>(detailsOfItem);
             return detailsItemsDTO;
         }
