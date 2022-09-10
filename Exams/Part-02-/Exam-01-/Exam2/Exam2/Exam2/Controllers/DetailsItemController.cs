@@ -4,6 +4,7 @@ using CsvHelper.Configuration;
 using Exam2.Models;
 using Exam2.ModelViews;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,40 +29,26 @@ namespace Exam2.Controllers
 
         //GET: api/<DetailsItemController>
         [HttpGet]
-        public IEnumerable<DetailsItem> Get()
+        public IEnumerable<DetailsItemDTO> Get()
         {
-            //var items = _dbContext.Items.ToArray();
-            var detailsItems = _dbContext.Items.Select(item => new DetailsItem
-            {
-                ItemId = item.Id,
-                ItemName = item.Name,
-                SubCategoryName = item.Sub.Name,
-                CategoryName = item.Sub.Cat.Name
-            })
-            .ToArray();
-            //var detailsItems = _mapper.Map<IEnumerable<DetailsItem>>(items);
+            var detailsOfItems = _dbContext.DetailsOfItems.ToArray();
+            var detailsItemsDTO = _mapper.Map<IEnumerable<DetailsItemDTO>>(detailsOfItems);
 
-            return detailsItems;
+            return detailsItemsDTO;
         }
 
         [HttpGet("[action]")]
         public IActionResult CSVPrint()
         {
-            var detailsItems = _dbContext.Items.Select(item => new DetailsItem
-            {
-                ItemId = item.Id,
-                ItemName = item.Name,
-                SubCategoryName = item.Sub.Name,
-                CategoryName = item.Sub.Cat.Name
-            })
-            ;
-            var listOfItem = detailsItems.ToArray();
+            var detailsOfItems = _dbContext.DetailsOfItems.ToList();
+            var detailsItemsDTO = _mapper.Map<List<DetailsItemDTO>>(detailsOfItems);
+            
             var csvPath = Path.Combine(Environment.CurrentDirectory, $"Items-{DateTime.Now.ToFileTime()}.csv");
             using (var streamWriter = new StreamWriter(csvPath))
             {
                 using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
                 {
-                    csvWriter.WriteRecords(detailsItems);
+                    csvWriter.WriteRecords(detailsItemsDTO);
                 }
             }
 
@@ -70,9 +57,11 @@ namespace Exam2.Controllers
 
         //GET api/<DetailsItemController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public DetailsItemDTO Get(int id)
         {
-            return "value";
+            var detailsOfItem = _dbContext.DetailsOfItems.Where(x=>x.ItemId==id).First();
+            var detailsItemsDTO = _mapper.Map<DetailsItemDTO>(detailsOfItem);
+            return detailsItemsDTO;
         }
 
         // POST api/<DetailsItemController>

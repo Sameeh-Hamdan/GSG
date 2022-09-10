@@ -1,6 +1,6 @@
 ﻿namespace Exam2.ModelViews
 {
-    public class DetailsItem
+    public class DetailsItemDTO
     {
         public int ItemId { get; set; }
         public string ItemName { get; set; }
