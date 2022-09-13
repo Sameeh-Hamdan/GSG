@@ -42,6 +42,7 @@ namespace PracticeProject
             });
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IItemService, ItemService>();
             services.AddAutoMapper(typeof(Startup));
         }
 

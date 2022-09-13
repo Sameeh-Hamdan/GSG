@@ -8,6 +8,7 @@ namespace PracticeProject.Models
 {
     public partial class Practice_DBContext : DbContext
     {
+        public bool IgnoreFilter;
         public Practice_DBContext()
         {
         }
@@ -18,6 +19,7 @@ namespace PracticeProject.Models
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<DetailsOfItem> DetailsOfItems { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -26,7 +28,6 @@ namespace PracticeProject.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=SAMEEH-ABUTAIMA;Database=Practice_DB;Trusted_Connection=True;");
             }
         }
@@ -50,6 +51,34 @@ namespace PracticeProject.Models
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(sysdatetime())");
+            });
+
+            modelBuilder.Entity<DetailsOfItem>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("DetailsOfItems");
+
+                entity.Property(e => e.CategoryId).HasColumnName("Category Id");
+
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("Category Name");
+
+                entity.Property(e => e.ItemId).HasColumnName("Item Id");
+
+                entity.Property(e => e.ItemName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("Item Name");
+
+                entity.Property(e => e.SubCategoryId).HasColumnName("SubCategory Id");
+
+                entity.Property(e => e.SubCategoryName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("SubCategory Name");
             });
 
             modelBuilder.Entity<Item>(entity =>
@@ -134,6 +163,10 @@ namespace PracticeProject.Models
                     .HasDefaultValueSql("(sysdatetime())");
             });
 
+            modelBuilder.Entity<User>().HasQueryFilter(user => !user.Archived ||IgnoreFilter);
+            modelBuilder.Entity<Category>().HasQueryFilter(category => !category.Archived ||IgnoreFilter);
+            modelBuilder.Entity<SubCategory>().HasQueryFilter(subCategory => !subCategory.Archived ||IgnoreFilter);
+            modelBuilder.Entity<Item>().HasQueryFilter(item => !item.Archived ||IgnoreFilter);
             OnModelCreatingPartial(modelBuilder);
         }
 

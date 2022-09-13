@@ -58,3 +58,29 @@ CREATE TABLE [dbo].[Users](
 );
 
 --Delete from SubCategories
+GO
+
+CREATE OR ALTER VIEW DetailsOfItems (
+    [Item Id],
+    [Item Name],
+    [SubCategory Id],
+    [SubCategory Name],
+    [Category Id],
+    [Category Name]
+)
+AS
+SELECT
+    it.Id,
+    it.[Name],
+    it.SubCategoryID,
+    sub_ctg.[Name],
+    ctg.Id,
+    ctg.[Name]
+FROM
+    Items AS it
+    INNER JOIN
+        SubCategories AS sub_ctg
+    ON sub_ctg.Id = it.SubCategoryID
+    INNER JOIN
+        Categories AS ctg
+    ON ctg.Id =sub_ctg.CategoryID;

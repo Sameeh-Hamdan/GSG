@@ -30,8 +30,8 @@ namespace PracticeProject.Services
         }
         public User FindByEmail(string email)
         {
-            var res = _dbContext.Users.FirstOrDefault(usr => usr.Email.ToLower().Equals(email.ToLower()));
-            return null;
+            var user = _dbContext.Users.FirstOrDefault(usr => usr.Email.ToLower().Equals(email.ToLower()));
+            return user;
         }
 
 
