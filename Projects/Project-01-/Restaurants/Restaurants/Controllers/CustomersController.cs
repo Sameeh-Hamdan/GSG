@@ -46,14 +46,27 @@ namespace Restaurants.Controllers
 
         // PUT api/<CustomersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] GetCustomersView getCustomersView)
         {
+            getCustomersView.Id= id;
+            var customer = _customerService.UpdateCustomer(getCustomersView);
+            if (customer != 0)
+            {
+                return Ok();
+            }
+            return BadRequest("Not Updated");  
         }
 
         // DELETE api/<CustomersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var isDeleted=_customerService.DeleteCustomer(id);
+            if (isDeleted == 0)
+            {
+                return BadRequest("Not Deleted");
+            }
+            return Ok();
         }
     }
 }

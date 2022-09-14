@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="ModelViews\RestaurantMenu\" />
-    <Folder Include="ModelViews\Restaurant\" />
   </ItemGroup>
 
 </Project>

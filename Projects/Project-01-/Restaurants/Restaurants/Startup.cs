@@ -42,6 +42,7 @@ namespace Restaurants
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurants", Version = "v1" });
             });
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IRestaurantService, RestaurantService>();
 
             services.AddAutoMapper(typeof(Startup));
         }

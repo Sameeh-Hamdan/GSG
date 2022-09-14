@@ -5,7 +5,7 @@ namespace Restaurants.Extentions
 {
     public static class CapitalizeFirstLetter
     {
-        public static string Capitalize(string str)
+        public static string Capitalize(this string str)
         {
             if (str.Length == 0)
                 return str;

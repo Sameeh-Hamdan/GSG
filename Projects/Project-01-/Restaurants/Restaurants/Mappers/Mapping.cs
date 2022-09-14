@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Restaurants.Models;
 using Restaurants.ModelViews.Customer;
+using Restaurants.ModelViews.Restaurant;
 
 namespace Restaurants.Mappers
 {
@@ -10,6 +11,8 @@ namespace Restaurants.Mappers
         {
             CreateMap<AddCustomerView, Customer>().ReverseMap();
             CreateMap<GetCustomersView, Customer>().ReverseMap();
+            CreateMap<GetRestaurantView, Restaurant>().ReverseMap();
+            CreateMap<AddRestaurantView, Restaurant>().ReverseMap();
         }
     }
 }

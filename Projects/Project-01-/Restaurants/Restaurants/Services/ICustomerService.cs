@@ -9,5 +9,7 @@ namespace Restaurants.Services
         public List<GetCustomersView> GetCustomers();
         public GetCustomersView GetCustomerById(int id);
         public Customer AddNewCustomer(AddCustomerView customerView);
+        public int UpdateCustomer(GetCustomersView getCustomersView);
+        public int DeleteCustomer(int id);
     }
 }
