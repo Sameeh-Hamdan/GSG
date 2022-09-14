@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Restaurants.Mappers;
+using Restaurants.Models;
+using Restaurants.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +20,13 @@ namespace Restaurants
 {
     public class Startup
     {
+        private MapperConfiguration _mapperConfiguration;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _mapperConfiguration = new MapperConfiguration(
+                cfg => cfg.AddProfile(new Mapping())
+                );
         }
 
         public IConfiguration Configuration { get; }
@@ -28,10 +36,14 @@ namespace Restaurants
         {
 
             services.AddControllers();
+            services.AddDbContext<restaurantdbTestContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurants", Version = "v1" });
             });
+            services.AddScoped<ICustomerService, CustomerService>();
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
