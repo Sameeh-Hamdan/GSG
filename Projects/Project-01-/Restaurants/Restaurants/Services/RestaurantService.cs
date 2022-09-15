@@ -11,9 +11,9 @@ namespace Restaurants.Services
 {
     public class RestaurantService : IRestaurantService
     {
-        private readonly restaurantdbTestContext _context;
+        private readonly RestaurantDBContext _context;
         private readonly IMapper _mapper;
-        public RestaurantService(restaurantdbTestContext context, IMapper mapper)
+        public RestaurantService(RestaurantDBContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -25,25 +25,13 @@ namespace Restaurants.Services
             );
             if (customer == null)
             {
-                addRestaurantView.Name= addRestaurantView.Name.Capitalize();
+                addRestaurantView.Name.Capitalize();
                 var newRestaurant = _mapper.Map<Restaurant>(addRestaurantView);
                 newRestaurant = _context.Restaurants.Add(newRestaurant).Entity;
                 _context.SaveChanges();
                 return newRestaurant;
             }
-            return customer;
-        }
-
-        public int DeleteRestaurant(int id)
-        {
-            var rest = _context.Restaurants.Find(id);
-            if (rest != null)
-            {
-                _context.Restaurants.Remove(rest);
-                _context.SaveChanges();
-                return rest.Id;
-            }
-            return 0;
+            return null;
         }
 
         public GetRestaurantView GetRestaurantById(int id)
@@ -69,12 +57,27 @@ namespace Restaurants.Services
             var rest = _context.Restaurants.Find(getRestaurantView.Id);
             if (rest != null)
             {
-                rest.Name = getRestaurantView.Name.Capitalize();
-                rest.PhoneNumber=getRestaurantView.PhoneNumber;
+
+                getRestaurantView.Name.Capitalize();
+                rest.Name = getRestaurantView.Name;
+                rest.PhoneNumber = getRestaurantView.PhoneNumber;
                 var updatedRest = _mapper.Map<Restaurant>(getRestaurantView);
                 _context.Restaurants.Update(rest);
                 _context.SaveChanges();
                 return updatedRest.Id;
+            }
+            return 0;
+        }
+        public int DeleteRestaurant(int id)
+        {
+            var rest = _context.Restaurants.Find(id);
+            if (rest != null)
+            {
+
+                rest.Archived = true;
+                _context.Restaurants.Update(rest);
+                _context.SaveChanges();
+                return rest.Id;
             }
             return 0;
         }

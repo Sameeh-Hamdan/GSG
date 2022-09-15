@@ -36,7 +36,7 @@ namespace Restaurants
         {
 
             services.AddControllers();
-            services.AddDbContext<restaurantdbTestContext>();
+            services.AddDbContext<RestaurantDBContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurants", Version = "v1" });

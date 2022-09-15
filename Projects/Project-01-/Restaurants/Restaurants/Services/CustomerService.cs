@@ -10,9 +10,9 @@ namespace Restaurants.Services
 {
     public class CustomerService:ICustomerService
     {
-        private readonly restaurantdbTestContext _context;
+        private readonly RestaurantDBContext _context;
         private readonly IMapper _mapper;
-        public CustomerService(restaurantdbTestContext context, IMapper mapper)
+        public CustomerService(RestaurantDBContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -42,8 +42,8 @@ namespace Restaurants.Services
             );
             if(customer == null)
             {
-                customerView.FirstName= customerView.FirstName.Capitalize();
-                customerView.LastName = customerView.LastName.Capitalize();
+                customerView.FirstName.Capitalize();
+                customerView.LastName.Capitalize();
                 var newcustomer = _mapper.Map<Customer>(customerView);
                 newcustomer = _context.Customers.Add(newcustomer).Entity;
                 _context.SaveChanges();
@@ -58,8 +58,10 @@ namespace Restaurants.Services
             var customer = _context.Customers.Find(getCustomersView.Id);
             if (customer != null)
             {
-                customer.FirstName=getCustomersView.FirstName.Capitalize();
-                customer.LastName = getCustomersView.LastName.Capitalize();
+                getCustomersView.FirstName.Capitalize();
+                getCustomersView.LastName.Capitalize();
+                customer.FirstName=getCustomersView.FirstName;
+                customer.LastName=getCustomersView.LastName;
                 var updatedcustomer = _mapper.Map<Customer>(getCustomersView);
                 _context.Customers.Update(customer);
                 _context.SaveChanges();
@@ -72,7 +74,8 @@ namespace Restaurants.Services
             var customer = _context.Customers.Find(id);
             if (customer != null)
             {
-                _context.Customers.Remove(customer);
+                customer.Archived = true;
+                _context.Customers.Update(customer);
                 _context.SaveChanges();
                 return customer.Id;
             }

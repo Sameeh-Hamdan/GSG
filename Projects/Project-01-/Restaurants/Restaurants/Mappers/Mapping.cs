@@ -12,15 +12,18 @@ namespace Restaurants.Mappers
     {
         public Mapping()
         {
-            CreateMap<AddCustomerView, Customer>().ReverseMap();
-            CreateMap<GetCustomersView, Customer>().ReverseMap();
             CreateMap<GetRestaurantView, Restaurant>().ReverseMap();
             CreateMap<AddRestaurantView, Restaurant>().ReverseMap();
+            
+            CreateMap<AddCustomerView, Customer>().ReverseMap();
+            CreateMap<GetCustomersView, Customer>().ReverseMap();
+            
             CreateMap<AddRestaurantMenu, RestaurantMenu>().ReverseMap();
             CreateMap<GetRestaurantMenu, RestaurantMenu>().ReverseMap();
+
             CreateMap<GetDetailsView, Detail>().ReverseMap();
-            CreateMap<AddOrderView, RestaurantMenusCustomer>().ReverseMap();
-            CreateMap<UpdateOrderView, RestaurantMenusCustomer>().ReverseMap();
+            CreateMap<AddOrderView, Order>().ReverseMap();
+            CreateMap<UpdateOrderView, Order>().ReverseMap();
         }
     }
 }

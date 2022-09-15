@@ -11,9 +11,9 @@ namespace Restaurants.Services
 {
     public class RestaurantMenuService : IRestaurantMenuService
     {
-        private readonly restaurantdbTestContext _context;
+        private readonly RestaurantDBContext _context;
         private readonly IMapper _mapper;
-        public RestaurantMenuService(restaurantdbTestContext context, IMapper mapper)
+        public RestaurantMenuService(RestaurantDBContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -26,25 +26,13 @@ namespace Restaurants.Services
             );
             if (restMenu == null)
             {
-                restaurantMenu.MealName = restaurantMenu.MealName.Capitalize();
+                restaurantMenu.MealName.Capitalize();
                 var newMeal = _mapper.Map<RestaurantMenu>(restaurantMenu);
                 newMeal = _context.RestaurantMenus.Add(newMeal).Entity;
                 _context.SaveChanges();
                 return newMeal;
             }
             return restMenu;
-        }
-
-        public int DeleteRestaurantMenu(int id)
-        {
-            var meal = _context.RestaurantMenus.Find(id);
-            if (meal != null)
-            {
-                _context.RestaurantMenus.Remove(meal);
-                _context.SaveChanges();
-                return meal.Id;
-            }
-            return 0;
         }
 
         public GetRestaurantMenu GetRestaurantMenuById(int id)
@@ -70,11 +58,27 @@ namespace Restaurants.Services
             var meal = _context.RestaurantMenus.Find(getRestaurantMenu.Id);
             if (meal != null)
             {
-                getRestaurantMenu.MealName = getRestaurantMenu.MealName.Capitalize();
+                getRestaurantMenu.MealName.Capitalize();
+                meal.MealName=getRestaurantMenu.MealName;
+                meal.Quantity=getRestaurantMenu.Quantity;
+                meal.RestaurantId=getRestaurantMenu.RestaurantId;
+                meal.PriceInNis = getRestaurantMenu.PriceInNis;
                 var updatedMeal = _mapper.Map<RestaurantMenu>(getRestaurantMenu);
-                _context.RestaurantMenus.Update(updatedMeal);
+                _context.RestaurantMenus.Update(meal);
                 _context.SaveChanges();
                 return updatedMeal.Id;
+            }
+            return 0;
+        }
+        public int DeleteRestaurantMenu(int id)
+        {
+            var meal = _context.RestaurantMenus.Find(id);
+            if (meal != null)
+            {
+                meal.Archived=true;
+                _context.RestaurantMenus.Update(meal);
+                _context.SaveChanges();
+                return meal.Id;
             }
             return 0;
         }

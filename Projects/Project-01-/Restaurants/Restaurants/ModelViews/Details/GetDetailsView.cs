@@ -1,4 +1,6 @@
-﻿namespace Restaurants.ModelViews.Details
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Restaurants.ModelViews.Details
 {
     public class GetDetailsView
     {

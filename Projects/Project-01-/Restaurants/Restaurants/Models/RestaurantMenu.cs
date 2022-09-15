@@ -9,7 +9,7 @@ namespace Restaurants.Models
     {
         public RestaurantMenu()
         {
-            RestaurantMenusCustomers = new HashSet<RestaurantMenusCustomer>();
+            Orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -23,6 +23,6 @@ namespace Restaurants.Models
         public int RestaurantId { get; set; }
 
         public virtual Restaurant Restaurant { get; set; }
-        public virtual ICollection<RestaurantMenusCustomer> RestaurantMenusCustomers { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

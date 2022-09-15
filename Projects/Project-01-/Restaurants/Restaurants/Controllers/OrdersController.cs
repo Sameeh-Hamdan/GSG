@@ -19,9 +19,9 @@ namespace Restaurants.Controllers
         }
         // GET: api/<OrdersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<UpdateOrderView> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _orderService.GetOrders();
         }
 
         // GET api/<OrdersController>/5
@@ -35,41 +35,37 @@ namespace Restaurants.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] AddOrderView addOrderView)
         {
-            var isAvailable=_orderService.IsAvailable(addOrderView.RestaurantMenuId);
-            if (isAvailable)
+            var addNewOrder = _orderService.Order(addOrderView);
+            if (addNewOrder != null)
             {
-                var addNewOrder = _orderService.Order(addOrderView);
-                if (addNewOrder != null)
-                {
-                    return Ok();
-                }
+                return Ok();
             }
-            
             return BadRequest("Does Not Added");
         }
 
         // PUT api/<OrdersController>/5
-        [HttpPut("{CusID}/{MealId}")]
-        public IActionResult Put(int CusID,int MealId, [FromBody] UpdateOrderView updateOrderView)
+        [HttpPut("{Id}")]
+        public IActionResult Put(int Id, [FromBody] UpdateOrderView updateOrderView)
         {
-            var isAvailable = _orderService.IsAvailable(MealId);
-            if (isAvailable)
+            updateOrderView.Id=Id;
+            var updateOrder = _orderService.UpdateOrder(updateOrderView);
+            if (updateOrder != 0)
             {
-                updateOrderView.RestaurantMenuId = MealId;
-                updateOrderView.CustomerId = CusID;
-                var updateOrder = _orderService.UpdateOrder(updateOrderView);
-                if (updateOrder != 0)
-                {
-                    return Ok();
-                }
+                return Ok();
             }
             return BadRequest("Not Updated");
         }
 
         // DELETE api/<OrdersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var isDeleted = _orderService.DeleteOrder(id);
+            if (isDeleted == 0)
+            {
+                return BadRequest("Not Deleted");
+            }
+            return Ok();
         }
     }
 }

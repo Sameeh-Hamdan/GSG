@@ -8,9 +8,9 @@ namespace Restaurants.Services
 {
     public class DetailService:IDetailService
     {
-        private readonly restaurantdbTestContext _context;
+        private readonly RestaurantDBContext _context;
         private readonly IMapper _mapper;
-        public DetailService(restaurantdbTestContext context, IMapper mapper)
+        public DetailService(RestaurantDBContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
