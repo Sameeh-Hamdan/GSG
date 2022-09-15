@@ -43,6 +43,9 @@ namespace Restaurants
             });
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddScoped<IRestaurantMenuService, RestaurantMenuService>();
+            services.AddScoped<IDetailService, DetailService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddAutoMapper(typeof(Startup));
         }

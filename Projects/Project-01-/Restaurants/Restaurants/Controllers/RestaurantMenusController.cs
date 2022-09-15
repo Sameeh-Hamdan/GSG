@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Restaurants.ModelViews.Restaurant;
+using Restaurants.ModelViews.RestaurantMenu;
+using Restaurants.Services;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,36 +12,60 @@ namespace Restaurants.Controllers
     [ApiController]
     public class RestaurantMenusController : ControllerBase
     {
+        private readonly IRestaurantMenuService _restaurantMenuService;
+        public RestaurantMenusController(IRestaurantMenuService restaurantMenuService)
+        {
+            _restaurantMenuService = restaurantMenuService;
+        }
         // GET: api/<RestaurantMenusController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<GetRestaurantMenu> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _restaurantMenuService.GetRestaurantMenus();
         }
 
         // GET api/<RestaurantMenusController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public GetRestaurantMenu Get(int id)
         {
-            return "value";
+            return _restaurantMenuService.GetRestaurantMenuById(id);
         }
 
         // POST api/<RestaurantMenusController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] AddRestaurantMenu addRestaurantMenu)
         {
+            var addNewMeal = _restaurantMenuService.AddNewRestaurantMenu(addRestaurantMenu);
+            if (addNewMeal != null)
+            {
+                return Ok();
+            }
+            return BadRequest("Does Not Added");
         }
 
         // PUT api/<RestaurantMenusController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] GetRestaurantMenu getRestaurantMenu)
         {
+            getRestaurantMenu.Id = id;
+            var rest = _restaurantMenuService.UpdateRestaurantMenu(getRestaurantMenu);
+            if (rest != 0)
+            {
+                return Ok();
+            }
+            return BadRequest("Not Updated");
         }
 
         // DELETE api/<RestaurantMenusController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var isDeleted = _restaurantMenuService.DeleteRestaurantMenu(id);
+            if (isDeleted == 0)
+            {
+                return BadRequest("Not Deleted");
+            }
+            return Ok();
         }
     }
 }
