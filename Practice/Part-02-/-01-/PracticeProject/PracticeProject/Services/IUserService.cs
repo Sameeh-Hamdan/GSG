@@ -9,5 +9,6 @@ namespace PracticeProject.Services
         public List<User> GetUsers();
         public User FindByEmail(string email);
         public User AddUser(UserRegistrationDTO userRegistrationDTO);
+        public User LoginUser(UserLoginDTO userLoginDTO);
     }
 }

@@ -48,6 +48,16 @@ namespace PracticeProject.Controllers
             newUser = _userService.AddUser(userRegistrationDTO);
             return Ok();
         }
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] UserLoginDTO userLoginDTO)
+        {
+            var user = _userService.LoginUser(userLoginDTO);
+            if (user == null)
+            {
+                return BadRequest("Invalid User Or Password");
+            }
+            return Ok();
+        }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
