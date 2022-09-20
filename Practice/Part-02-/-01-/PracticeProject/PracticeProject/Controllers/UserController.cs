@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PracticeProject.DTOs.User;
 using PracticeProject.Models;
 using PracticeProject.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +14,7 @@ namespace PracticeProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -31,6 +34,7 @@ namespace PracticeProject.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
+        
         public string Get(int id)
         {
             return "value";
@@ -38,6 +42,7 @@ namespace PracticeProject.Controllers
 
         // POST api/<UserController>
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Post([FromBody] UserRegistrationDTO userRegistrationDTO)
         {
             var newUser = _userService.FindByEmail(userRegistrationDTO.Email);
@@ -49,14 +54,12 @@ namespace PracticeProject.Controllers
             return Ok();
         }
         [HttpPost("Login")]
+        [AllowAnonymous]
         public IActionResult Login([FromBody] UserLoginDTO userLoginDTO)
         {
-            var user = _userService.LoginUser(userLoginDTO);
-            if (user == null)
-            {
-                return BadRequest("Invalid User Or Password");
-            }
-            return Ok();
+            var user = _userService.LoginUser(userLoginDTO)
+                ?? throw new Exception("Invalid User Or Password");
+            return Ok(user);
         }
 
         // PUT api/<UserController>/5

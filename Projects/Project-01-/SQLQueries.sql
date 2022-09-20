@@ -82,3 +82,36 @@ FROM
     ON c.Id =o.CustomerId
 GROUP BY
 	r.[Name]
+
+
+--SELECT
+--    r.[Name],
+--    Count(DISTINCT c.Id),
+--	Sum(rm.PriceInNis*o.Quantity/3.5),
+--	Sum(rm.PriceInNis*o.Quantity),
+--	rm.MealName
+--FROM
+--    Restaurants AS r
+--    INNER JOIN
+--        RestaurantMenus AS rm
+--    ON rm.RestaurantId = r.Id
+--    INNER JOIN
+--        Orders AS o
+--    ON o.RestaurantMenuId =rm.Id
+--	INNER JOIN
+--		Customers AS c
+--    ON c.Id =o.CustomerId
+--GROUP BY
+--	r.[Name],o.RestaurantMenuId
+
+
+--Select r.Name,Sum(o.Quantity)
+--From
+--	Orders o
+--	INNER JOIN
+--		RestaurantMenus rm
+--	ON rm.Id=o.RestaurantMenuId
+--	INNER JOIN
+--		Restaurants r
+--	ON r.Id=rm.RestaurantId
+--Group By rm.Id,r.Name

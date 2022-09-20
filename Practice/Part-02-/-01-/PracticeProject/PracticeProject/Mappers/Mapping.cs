@@ -10,7 +10,11 @@ namespace PracticeProject.Mappers
         public Mapping()
         {
             CreateMap<UserRegistrationDTO, User>().ReverseMap();
+            CreateMap<UserLoginDTO, User>().ReverseMap();
+            CreateMap<LoginUserResponseDTO, User>().ReverseMap();
+            CreateMap<GetUsersDTO, User>().ReverseMap();
             CreateMap<DetailsOfItemDTO, DetailsOfItem>().ReverseMap();
+            
         }
     }
 }

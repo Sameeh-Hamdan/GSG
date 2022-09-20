@@ -6,9 +6,9 @@ namespace PracticeProject.Services
 {
     public interface IUserService
     {
-        public List<User> GetUsers();
+        public List<GetUsersDTO> GetUsers();
         public User FindByEmail(string email);
         public User AddUser(UserRegistrationDTO userRegistrationDTO);
-        public User LoginUser(UserLoginDTO userLoginDTO);
+        public LoginUserResponseDTO LoginUser(UserLoginDTO userLoginDTO);
     }
 }
