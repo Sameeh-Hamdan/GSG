@@ -5,7 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Practice02.Data;
 using Practice02.Data.Mappers;
+using Practice02.Data.Services.Users;
 
 namespace Practice02
 {
@@ -25,10 +27,13 @@ namespace Practice02
         {
 
             services.AddControllers();
+            services.AddDbContext<Practice02DBContext>();
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Practice02", Version = "v1" });
             });
+            services.AddScoped<IUserService,UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

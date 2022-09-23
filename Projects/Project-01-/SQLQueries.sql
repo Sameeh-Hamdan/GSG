@@ -57,31 +57,68 @@ CREATE TABLE Orders(
 	CONSTRAINT FK_Customer_RestaurantMenuCustomer FOREIGN KEY ([CustomerId]) REFERENCES [Customers] ([Id]) ON DELETE CASCADE ON UPDATE CASCADE
 );
 GO
-CREATE OR ALTER VIEW Details(
-    [RestaurantName],
-    [NumberOfOrderedCustomer],
-    [ProfitInUsd],
-    [ProfitInNis]
-)
+CREATE OR ALTER VIEW Details
 AS
 SELECT
-    r.[Name],
-    Count(DISTINCT c.Id),
-	Sum(rm.PriceInNis*o.Quantity/3.5),
-	Sum(rm.PriceInNis*o.Quantity)
-FROM
-    Restaurants AS r
+        c.Id as Id,
+        r.[Name] as RestaurantName,
+        r.Id as RestaurantId,
+        rm.MealName as MealName,
+        Sum(rm.PriceInNis) as ProfitInNis,
+        rm.Id as RestaurantMenuId,
+        Sum(rm.PriceInUsd) as ProfitInUsd,
+        count(Distinct c.Id) as NumberofOrderedCustomer,
+        cc.CustomerName,
+        cc.price 
+    FROM
+        Orders AS o     
     INNER JOIN
-        RestaurantMenus AS rm
-    ON rm.RestaurantId = r.Id
+        Customers AS c     
+            ON o.CustomerId = c.Id     
     INNER JOIN
-        Orders AS o
-    ON o.RestaurantMenuId =rm.Id
-	INNER JOIN
-		Customers AS c
-    ON c.Id =o.CustomerId
-GROUP BY
-	r.[Name]
+        RestaurantMenus AS rm     
+            ON rm.Id =o.RestaurantMenuId  
+    INNER JOIN
+        Restaurants AS r     
+            ON r.Id =rm.RestaurantId   
+    INNER join
+        (
+            select
+                sub.occurance,
+                sub.restaurantId,
+                sub.price,
+                sub.Id,
+                sub.CustomerName   
+            From
+                (select
+                    c.Id,
+                    r.[Name] as raa,
+                    r.Id as restaurantId,
+                    CONCAT_WS(' ',
+                    c.FirstName,
+                    c.LastName) as CustomerName,
+                    sum(rm.PriceInNis) as price,
+                    count(o.CustomerId) as occurance    
+                from
+                    Customers c    
+                INNER JOIN
+                    Orders AS o    
+                        ON c.Id = o.CustomerId    
+                INNER JOIN
+                    RestaurantMenus AS rm    
+                        ON rm.Id =o.RestaurantMenuId    
+                INNER JOIN
+                    Restaurants AS r    
+                        ON r.Id =rm.RestaurantId   
+                GROUP BY
+                    c.Id,
+                    r.[Name] ,
+                    restaurantId   
+                order by
+                    price desc   )sub  )as cc 
+                    on cc.restaurantId=r.Id 
+            GROUP BY
+                r.Id;
 
 
 --SELECT
